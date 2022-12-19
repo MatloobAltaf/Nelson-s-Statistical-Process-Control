@@ -14,14 +14,15 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/MatloobAltaf/Nelson-s-Statistical-Process-Control</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Assets\icon3.png">
+    <None Include="assets\icon3.png">
       <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath></PackagePath>
     </None>
-    <None Update="Readme.md">
+    <None Include="Readme.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
