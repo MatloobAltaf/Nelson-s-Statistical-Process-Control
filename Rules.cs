@@ -1,4 +1,6 @@
-﻿namespace StatisticalProcessControl
+﻿using System.Diagnostics.Metrics;
+
+namespace StatisticalProcessControl
 {
     public class Rules
     {
@@ -7,12 +9,13 @@
         /// Returns the indices and values of points in a data set that are more than a specified number of standard deviations from the mean.
         /// </summary>
         /// <param name="data">The data set to analyze.</param>
+        /// <param name="numPoints">The number of points that should fall beyond the limit to count it is a failure.</param>
         /// <param name="numStdDev">The number of standard deviations from the mean that a point must be to be considered a violation.</param>
         /// <param name="mean">The mean of the data set. If not provided, it will be calculated from the data set.</param>
         /// <param name="seedLimit">The index to start checking from. If not provided, it will default to 0.</param>
         /// <param name="stdDev">The standard deviation of the data set. If not provided, it will be calculated from the data set.</param>
         /// <returns>A list of tuples containing the indices and values of the points that violate the condition.</returns>
-        public List<(int index, double value)> Rule1(double[] data, double numStdDev, double mean = 0, int seedLimit = 0,
+        public List<(int index, double value)> Rule1(double[] data, int numPoints, double numStdDev, double mean = 0, int seedLimit = 0,
             double stdDev = 0)
         {
             // Validate the input parameters
@@ -49,6 +52,7 @@
             }
 
             List<(int, double)> failedPoints = new List<(int, double)>();
+            int counter = 0;
 
             // Calculate the mean and standard deviation if not provided
             if (mean == 0)
@@ -64,14 +68,19 @@
             // Iterate through the data array starting from the seed limit
             for (int i = seedLimit; i < data.Length; i++)
             {
-                // Check if the current point is more than the specified number of standard deviations from the mean
-                double point = data[i];
-                double distanceFromMean = Math.Abs(point - mean);
-                if (distanceFromMean > numStdDev * stdDev)
+                // Check if the point is within the specified number of standard deviations from the mean on either side of the mean
+                bool fail = data[i] > mean - numStdDev * stdDev;
+                if (fail)
                 {
-                    // Add the current point to the list of failed points
-                    failedPoints.Add((i, point));
-                    i = seedLimit - 1; // reset to start at seedLimit again
+                    // Increment the counter
+                    counter++;
+
+                    // If the counter reaches the required number of points, add the last point that violates the condition to the list of failed points
+                    if (counter == numPoints)
+                    {
+                        failedPoints.Add((i, data[i]));
+                        counter = 0; // reset the counter
+                    }
                 }
             }
 

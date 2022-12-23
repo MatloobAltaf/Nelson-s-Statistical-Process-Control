@@ -15,6 +15,8 @@
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/MatloobAltaf/Nelson-s-Statistical-Process-Control</RepositoryUrl>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Fixed: Bug in Rule1</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
