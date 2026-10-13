@@ -20,8 +20,8 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Fixed: Bug in Rule1</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Fixed: Rule1 now flags points beyond the limit on both sides of the mean. Added Source Link, embedded symbols, XML docs and deterministic builds.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
