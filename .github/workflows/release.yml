@@ -19,7 +19,7 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: nuget
+    environment: production
     steps:
       - name: Require a repository admin
         env:
