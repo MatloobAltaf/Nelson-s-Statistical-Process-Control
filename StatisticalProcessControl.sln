@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticalProcessControl", "StatisticalProcessControl.csproj", "{1E71EDBA-95B5-4648-88A1-921949F7A789}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E1F1309C-E8D1-4992-B3A2-860A50063715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticalProcessControl.Tests", "tests\StatisticalProcessControl.Tests\StatisticalProcessControl.Tests.csproj", "{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,18 @@ Global
 		{1E71EDBA-95B5-4648-88A1-921949F7A789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E71EDBA-95B5-4648-88A1-921949F7A789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E71EDBA-95B5-4648-88A1-921949F7A789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {320F2E6A-508A-408B-A402-0EE936943050}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BEFDDF9E-870C-413C-AC9F-1966E8AD2F13} = {E1F1309C-E8D1-4992-B3A2-860A50063715}
 	EndGlobalSection
 EndGlobal
