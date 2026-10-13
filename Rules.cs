@@ -68,8 +68,7 @@ namespace StatisticalProcessControl
             // Iterate through the data array starting from the seed limit
             for (int i = seedLimit; i < data.Length; i++)
             {
-                // Check if the point is within the specified number of standard deviations from the mean on either side of the mean
-                bool fail = data[i] > mean - numStdDev * stdDev;
+                bool fail = Math.Abs(data[i] - mean) > numStdDev * stdDev;
                 if (fail)
                 {
                     // Increment the counter
