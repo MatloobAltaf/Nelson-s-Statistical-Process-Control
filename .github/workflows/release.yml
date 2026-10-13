@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version part to increment from the latest tag
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: nuget
+    steps:
+      - name: Require a repository admin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          permission=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$GITHUB_ACTOR/permission" --jq .permission)
+          if [ "$permission" != "admin" ]; then
+            echo "::error::Only repository admins can publish a release ($GITHUB_ACTOR has $permission access)."
+            exit 1
+          fi
+
+      - name: Require the default branch
+        if: github.ref_name != github.event.repository.default_branch
+        run: |
+          echo "::error::Releases run from ${{ github.event.repository.default_branch }} only."
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Compute version and release notes
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          previous_tag=$(git describe --tags --abbrev=0 --match 'v*') || {
+            echo "::error::No v* tag found. Tag the last published release first, for example v1.0.1."
+            exit 1
+          }
+          IFS=. read -r major minor patch <<< "${previous_tag#v}"
+          case "$BUMP" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+          esac
+          git log "$previous_tag..HEAD" --no-merges --pretty='- %s' > RELEASE_NOTES.md
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "::error::No new commits since $previous_tag."
+            exit 1
+          fi
+          echo "version=$major.$minor.$patch" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: dotnet test StatisticalProcessControl.sln
+
+      - name: Build package
+        run: dotnet build StatisticalProcessControl.csproj -c Release -p:Version=${{ steps.version.outputs.version }}
+
+      - name: NuGet login
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: MatloobAltaf
+
+      - name: Publish to NuGet
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: dotnet nuget push "bin/Release/StatisticalProcessControl.$VERSION.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "v$VERSION" "bin/Release/StatisticalProcessControl.$VERSION.nupkg" --target "$GITHUB_SHA" --title "v$VERSION" --notes-file RELEASE_NOTES.md
