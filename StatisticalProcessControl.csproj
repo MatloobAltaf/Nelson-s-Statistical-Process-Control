@@ -6,18 +6,20 @@
     <Nullable>enable</Nullable>
     <SignAssembly>False</SignAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Nelson's Stastical Process Control </Title>
+    <Title>Nelson's Statistical Process Control</Title>
     <Authors>MatloobAltaf</Authors>
-    <Description>An implementation of Nelson's rule using Linq. Nelson's rules are a method in process control of determining whether some measured variable is out of control (unpredictable versus consistent).</Description>
+    <Description>An implementation of Nelson's rules using Linq. Nelson's rules are a method in process control of determining whether some measured variable is out of control (unpredictable versus consistent).</Description>
     <PackageIcon>icon3.png</PackageIcon>
-    <PackageTags>SPC; Stastical Process Control; Nelson, Stastical Rules</PackageTags>
+    <PackageTags>spc;statistical-process-control;nelson-rules;control-chart;quality-control;six-sigma;statistics;outlier-detection</PackageTags>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/MatloobAltaf/Nelson-s-Statistical-Process-Control</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MatloobAltaf/Nelson-s-Statistical-Process-Control</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Version>1.0.1</Version>
     <PackageReleaseNotes>Fixed: Bug in Rule1</PackageReleaseNotes>
   </PropertyGroup>
@@ -27,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="assets\icon3.png">
+    <None Include="Assets/icon3.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

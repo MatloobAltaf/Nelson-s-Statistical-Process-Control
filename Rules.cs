@@ -2,6 +2,9 @@
 
 namespace StatisticalProcessControl
 {
+    /// <summary>
+    /// Nelson's rules for detecting out-of-control points in a process data set.
+    /// </summary>
     public class Rules
     {
         /// <summary>
