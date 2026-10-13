@@ -18,12 +18,14 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Fixed: Bug in Rule1</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(MSBuildProjectDirectory)/RELEASE_NOTES.md')">
+    <PackageReleaseNotes>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/RELEASE_NOTES.md'))</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
